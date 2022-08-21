@@ -1,53 +1,71 @@
-import Manager.PrintManager;
-import Manager.TaskManager;
-import Task.Task;
-import Task.Epic;
-import Task.SubTask;
-
-import static Task.StatusTask.NEW;
-import static Task.StatusTask.IN_PROGRES;
-import static Task.StatusTask.DONE;
-
+import manager.*;
+import task.Task;
+import task.Epic;
+import task.SubTask;
+import task.StatusTask;
 
 public class Main {
     public static void main(String[]args){
 
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
         PrintManager printManager = new PrintManager();
 
-        Task task = new Task("Убрать квартику","Убрать в кухне", NEW);
-        Task task1 = new Task("Выгулять собаку","Помыть лапы",NEW);
+        //Создание и сохранение таски
+        Task task = new Task("Z1","1", StatusTask.NEW);
+        Task task1 = new Task("Z2","2",StatusTask.NEW);
+        Task task2 = new Task("Z3","3",StatusTask.NEW);
 
         taskManager.addTasks(task);
         taskManager.addTasks(task1);
+        taskManager.addTasks(task2);
 
-        Epic epic = new Epic( "Первая цель","Первый выполнять",NEW);
-        Epic epic1 = new Epic( "Вторая цель","Второй выполнять",NEW );
+        //Создание и сохранение эпика
+        Epic epic = new Epic( "Ep1"," Э1",StatusTask.NEW);
+        Epic epic1 = new Epic( "Еp2","Э2",StatusTask.NEW );
 
         taskManager.addEpic(epic);
         taskManager.addEpic(epic1);
 
-
-        SubTask subTask = new SubTask("К перовой цели","Дополни выполнение",DONE,0);
-        SubTask subTask1 = new SubTask("К второй цели","Дополни выполнение",DONE,0);
-        SubTask subTask2 = new SubTask("К третьей цели","Дополни выполнение",NEW,0);
+        //Создание и сохранение сабтаски
+        SubTask subTask = new SubTask("S1","S1",StatusTask.DONE,3);
+        SubTask subTask1 = new SubTask("S2","S2",StatusTask.DONE,3);
+        SubTask subTask2 = new SubTask("S3","S3",StatusTask.DONE,3);
 
         taskManager.addSubtasks(subTask);
         taskManager.addSubtasks(subTask1);
         taskManager.addSubtasks(subTask2);
 
-        Task task2 = new Task("Выгулять собаку","Помыть лапы",DONE);
-        taskManager.updatingTask(1,task2); //Обновление Таски
-        taskManager.setStatusEpic(0, epic); // Изменение статуса Эпика
-        taskManager.getSubTaskListId(0); // Получение списка сабтасков определенного Эпика
-        taskManager.deleteIdTask(0); // Удаление Задачи/ТАСКИ по ID
-        taskManager.deleteIdEpic(0); // Удаление Эпика по ID
-        taskManager.getTaskByID(1);  // Получение Таски по ID
-
-        printManager.printTask(taskManager.getTasks()); // Печать таски
-        printManager.printEpic(taskManager.getEpic()); // Печать эпик
-        printManager.printSubtask(taskManager.getSubTaskList()); // Печать сабтаска
+        //----------------------------------------------
+        // Проверка Истории вызова Задач
 
 
+       taskManager.getEpicByID(3);
+        taskManager.getIdSubTask(5);
+        taskManager.getIdSubTask(6);
+        taskManager.getIdSubTask(7);
+        taskManager.getEpicByID(3);
+        System.out.println(taskManager.getHistory());
+
+        taskManager.getTaskByID(1);
+
+        System.out.println(taskManager.getHistory());  // Получение списка Истории
+        taskManager.getTaskByID(0);
+        taskManager.deleteIdEpic(3);
+        System.out.println(taskManager.getHistory());  // Получение списка Истории
+
+        taskManager.getEpicByID(3);
+        taskManager.getTaskByID(2);
+
+        System.out.println(taskManager.getHistory());  // Получение списка Истории
+
+        taskManager.getTaskByID(1);
+        taskManager.getEpicByID(3);
+        System.out.println(taskManager.getHistory());  // Получение списка Истории
+
+        taskManager.deleteIdEpic(3);
+
+        System.out.println(taskManager.getHistory());  // Получение списка Истории
+
+        //--------------------------------
     }
 }

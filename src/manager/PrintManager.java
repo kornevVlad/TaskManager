@@ -1,9 +1,9 @@
-package Manager;
+package manager;
 
-import Task.Task;
-import Task.SubTask;
+import task.Task;
+import task.SubTask;
 import java.util.ArrayList;
-import Task.Epic;
+import task.Epic;
 
 public class PrintManager {
 
