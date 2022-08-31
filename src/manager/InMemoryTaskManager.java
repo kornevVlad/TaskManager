@@ -5,17 +5,19 @@ import task.SubTask;
 import task.Epic;
 import task.StatusTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
-    private   Map<Integer, Task> tasks = new HashMap<>();
-    private   Map<Integer, SubTask> subtasks = new HashMap<>();
-    private   Map<Integer, Epic> epics = new HashMap<>();
+    protected    Map<Integer, Task> tasks = new HashMap<>();
+    protected    Map<Integer, SubTask> subtasks = new HashMap<>();
+    protected static    Map<Integer, Epic> epics = new HashMap<>();
 
-    InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
+   protected InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
 
-    private int numberGenerate = 0;
+    protected int numberGenerate = 0;
 
     @Override
     public void addTasks(Task task) { // Сохраняем таски
@@ -221,5 +223,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     public List<Task> getHistory(){ // Получение списка  истории Задач
        return inMemoryHistoryManager.getHistory();
+    }
+
+    @Override
+    public void loadFromFile(File file) throws IOException {
+
     }
 }

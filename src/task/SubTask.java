@@ -26,4 +26,7 @@ public class SubTask extends Task {
                 ", status=" + status +
                 '}';
     }
+    public TaskType getType(){
+        return TaskType.SUBTASK;
+    }
 }

@@ -7,8 +7,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     Node<Task> first;
     Node<Task> last;
 
-    private final Map<Integer, Node> linkedMap = new HashMap<>();
-    CustomLinkedList<Task> linkedList = new CustomLinkedList<>();
+    protected final Map<Integer, Node> linkedMap = new HashMap<>();
+    protected CustomLinkedList<Task> linkedList = new CustomLinkedList<>();
 
     @Override
     public void addHistory(Task task) { // Сохранение истории просмотров

@@ -1,4 +1,5 @@
 package task;
+import task.TaskType;
 
 public class Task {
     protected String name;
@@ -52,5 +53,8 @@ public class Task {
                 ", id=" + id +
                 ", status='" + status + '\'' +
                 '}';
+    }
+    public TaskType getType(){
+        return TaskType.TASK;
     }
 }

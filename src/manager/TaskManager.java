@@ -3,6 +3,10 @@ package manager;
 import task.Task;
 import task.SubTask;
 import task.Epic;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import java.util.ArrayList;
@@ -52,4 +56,6 @@ public interface TaskManager {
     void setStatusSubtask(int epicId, SubTask subtask); // Обновление статуса Сабтаски
 
     List<Task> getHistory(); // История просмотренных задач
+
+    void loadFromFile(File file) throws IOException;
 }
