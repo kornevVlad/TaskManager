@@ -4,7 +4,7 @@ import task.Task;
 import java.util.List;
 
 
-public interface HistoryManager {
+public interface HistoryManager  {
 
    void addHistory(Task task); // Запись просмотров по ID
 

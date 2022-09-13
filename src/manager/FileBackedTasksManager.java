@@ -20,7 +20,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void addTasks(Task task) { // сохранение создания Task
+    public void addTasks(Task task)  { // сохранение создания Task
         super.addTasks(task);
         save();
     }
@@ -43,11 +43,82 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return inMemoryHistoryManager.getHistory();
     }
 
+    @Override
+    public void setStatusTask(int taskId, Task task) {
+        super.setStatusTask(taskId, task);
+        save();
+    }
+
+    @Override
+    public void updatingTask(int taskId, Task task) {
+        super.updatingTask(taskId, task);
+        save();
+    }
+
+    @Override
+    public void updateEpic(int epicId, Epic epic) {
+        super.updateEpic(epicId, epic);
+    }
+
+    @Override
+    public void updateSubTask(int epicId, SubTask subTask) {
+        super.updateSubTask(epicId, subTask);
+        save();
+    }
+
+    @Override
+    public void setStatusEpic(int epicId, Epic epic) {
+        super.setStatusEpic(epicId, epic);
+        save();
+    }
+
+    @Override
+    public void setStatusSubtask(int epicId, SubTask subtask) {
+        super.setStatusSubtask(epicId, subtask);
+        save();
+    }
+
+    @Override
+    public void deleteTask() {
+        super.deleteTask();
+        save();
+    }
+
+    @Override
+    public void deleteIdTask(int taskId) {
+        super.deleteIdTask(taskId);
+        save();
+    }
+
+    @Override
+    public void deleteEpicAndSubtask() {
+        super.deleteEpicAndSubtask();
+        save();
+    }
+
+    @Override
+    public void deleteIdEpic(int epicId) {
+        super.deleteIdEpic(epicId);
+        save();
+    }
+
+    @Override
+    public void deleteSubTask() {
+        super.deleteSubTask();
+        save();
+    }
+
+    @Override
+    public void deleteIdSubtask(int subtaskId) {
+        super.deleteIdSubtask(subtaskId);
+        save();
+    }
+
     public void save() { // Сохранение Истории вызова задач
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
 
-            bufferedWriter.write("id,type,name,status,description,epic");
+            bufferedWriter.write("id,type,name,status,description,startTime,duration,epicId");
             bufferedWriter.newLine();
 
             addToString(bufferedWriter, tasks.values());
@@ -66,11 +137,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         for (Task task : tasks) {
             if (task.getType().equals(TaskType.SUBTASK)) {
                 int epicId = ((SubTask) task).getEpicId();
-                bufferedWriter.write(String.format("%s,%s,%s,%s,%s,%s\n", task.getId(), task.getType(), task.getName(),
-                        task.getStatus(), task.getDescription(), epicId));
+                bufferedWriter.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s\n",task.getId(), task.getType(), task.getName(),
+                        task.getStatus(), task.getDescription(),task.getTime(), task.getDuration(),epicId));
             } else {
-                bufferedWriter.write((String.format("%s,%s,%s,%s,%s\n", task.getId(), task.getType(), task.getName(),
-                        task.getStatus(), task.getDescription())));
+                bufferedWriter.write((String.format("%s,%s,%s,%s,%s,%s,%s\n", task.getId(), task.getType(), task.getName(),
+                        task.getStatus(), task.getDescription(),task.getTime(), task.getDuration())));
             }
         }
     }
@@ -147,6 +218,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static Task fromToString(String line) { // Читаем строки возвращаем значения
         int id = 0;
+        String startTime;
+        int duration;
         String name;
         String type;
         String description;
@@ -160,9 +233,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             description = st[4];
             status = StatusTask.valueOf(st[3]);
             type = st[1];
+            startTime = st[5];
+            duration = Integer.parseInt(st[6]);
             switch (type) {
                 case "TASK":
-                    Task task = new Task(name, description, status);
+                    Task task = new Task(name, description, status,startTime,duration);
                     task.setId(id); // Запись ID в задачу
                     return task;
                 case "EPIC":
@@ -170,8 +245,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     epic.setId(id);
                     return epic;
                 case "SUBTASK":
-                    epicId = Integer.parseInt(st[5]);
-                    SubTask subTask = new SubTask(name, description, status, epicId);
+                    epicId = Integer.parseInt(st[7]);
+                    SubTask subTask = new SubTask(name, description, status,startTime,duration, epicId);
                     subTask.setId(id);
                     return subTask;
             }
@@ -192,43 +267,38 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static void main(String[] args) throws IOException {
 
-
         TaskManager taskManager = Managers.getDefault();
 
-        Task task = new Task("Task1"," Descriptoin1", StatusTask.NEW);
-        Task task1 = new Task("Task2","Descriptoin2",StatusTask.NEW);
-        Task task2 = new Task("Task3","Descriptoin3",StatusTask.NEW);
+        Task taskId0New = new Task("Task1", " Descriptoin1", StatusTask.NEW, "01.02.2000 08:00", 60);
+        Task taskId1New = new Task("Task2", " Descriptoin1", StatusTask.DONE, "01.02.2000 07:00", 60);
+        taskManager.addTasks(taskId0New);
+        taskManager.addTasks(taskId1New);
 
-        taskManager.addTasks(task);
-        taskManager.addTasks(task1);
-        taskManager.addTasks(task2);
+        Epic epicId2New = new Epic("Epic1", "Descriptoin1", StatusTask.NEW);
+        Epic epicId3New = new Epic("Epic1", "Descriptoin1", StatusTask.NEW);
+        taskManager.addEpic(epicId2New);
+        taskManager.addEpic(epicId3New);
 
-        //Создание и сохранение эпика
-        Epic epic = new Epic( "Epic1","Descriptoin1",StatusTask.NEW);
-        Epic epic1 = new Epic( "Еpic2","Descriptoin2",StatusTask.NEW );
-
-        taskManager.addEpic(epic);
-        taskManager.addEpic(epic1);
-
-        //Создание и сохранение сабтаски
-        SubTask subTask = new SubTask("SubTask1","Descriptoin1",StatusTask.DONE,3);
-        SubTask subTask1 = new SubTask("Subtask2","Descriptoin2",StatusTask.DONE,3);
-        SubTask subTask2 = new SubTask("Subtask3","Descriptoin3",StatusTask.DONE,3);
-
-        taskManager.addSubtasks(subTask);
-        taskManager.addSubtasks(subTask1);
-        taskManager.addSubtasks(subTask2);
+        SubTask subTaskId4New = new SubTask("SubTask1", "Descriptoin1", StatusTask.NEW, "01.02.2000 12:00", 60, 3);
+        SubTask subTaskId5Done = new SubTask("Subtask2", "Descriptoin2", StatusTask.DONE, "01.02.2000 10:00", 60, 3);
+        SubTask subTaskId6Done = new SubTask("Subtask2", "Descriptoin2", StatusTask.DONE, "01.02.2000 11:00", 60, 3);
+        taskManager.addSubtasks(subTaskId4New);
+        taskManager.addSubtasks(subTaskId5Done);
+        taskManager.addSubtasks(subTaskId6Done);
 
         taskManager.getTaskByID(0);
         taskManager.getTaskByID(1);
-        taskManager.getTaskByID(0);
 
+        taskManager.getEpicByID(2);
         taskManager.getEpicByID(3);
-        taskManager.getEpicByID(4);
 
+        taskManager.getIdSubTask(4);
         taskManager.getIdSubTask(5);
         taskManager.getIdSubTask(6);
-        taskManager.getIdSubTask(7);
+
+        System.out.println("Приоритет");
+        System.out.println(taskManager.getPrioritizedTasks());
+        System.out.println();
 
         System.out.print("История: ");
         System.out.println(taskManager.getHistory());
@@ -245,6 +315,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         System.out.println(taskManager.getTasks());
         System.out.println(taskManager.getEpic());
         System.out.println(taskManager.getSubTaskList());
+        System.out.println();
+
         System.out.println("Печатаем историю");
         System.out.println(taskManager.getHistory());
     }

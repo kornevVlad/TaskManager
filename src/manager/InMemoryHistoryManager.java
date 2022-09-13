@@ -12,13 +12,18 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void addHistory(Task task) { // Сохранение истории просмотров
-        if (!linkedMap.containsKey(task.getId())) { // Дубля нет
-            linkedList.linkLast(task);
-            linkedMap.put(task.getId(), last);
-        } else { // Дубль есть
-            linkedList.removeNode(task.getId());
-            linkedList.linkLast(task);
-            linkedMap.put(task.getId(), last);
+        if(task != null) {
+            if (!linkedMap.containsKey(task.getId())) { // Дубля нет
+                linkedList.linkLast(task);
+                linkedMap.put(task.getId(), last);
+            } else { // Дубль есть
+                linkedList.removeNode(task.getId());
+                linkedList.linkLast(task);
+                linkedMap.put(task.getId(), last);
+            }
+
+        }else {
+            return;
         }
     }
 
