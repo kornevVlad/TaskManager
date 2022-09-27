@@ -1,69 +1,64 @@
-import manager.*;
-import task.Task;
-import task.Epic;
-/*import task.SubTask;
-import task.StatusTask;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import manager.Managers;
+import manager.TaskManager;
+
+import task.Epic;
+import task.StatusTask;
+import server.KVServer;
+import task.SubTask;
+import task.Task;
+
 import java.io.IOException;
 
+
 public class Main {
-    public static void main(String[]args) throws IOException {
+    public static void main(String[] args) throws IOException{
+
+        KVServer kvServer = new KVServer();
+        kvServer.start();
 
         TaskManager taskManager = Managers.getDefault();
-        PrintManager printManager = new PrintManager();
 
+        Task taskId0New = new Task("Task1", " Descriptoin1", StatusTask.NEW, "01.02.2000 08:00", 60);
+        Task taskId1New = new Task("Task2", " Descriptoin1", StatusTask.DONE, "01.02.2000 07:00", 60);
+        taskManager.addTasks(taskId0New);
+        taskManager.addTasks(taskId1New);
 
-        //Создание и сохранение таски
-        Task task = new Task(2000,1,1,7,30,"Task1"," Descriptoin1", StatusTask.NEW,60);
-        Task task1 = new Task(2000,2,1,7,30,"Task1"," Descriptoin1", StatusTask.NEW,60);
-        Task task2 = new Task(2000,3,1,7,30,"Task1"," Descriptoin1", StatusTask.NEW,60);
+        taskManager.save(); //Сохранение на сервер
 
-        taskManager.addTasks(task);
-        taskManager.addTasks(task1);
-        taskManager.addTasks(task2);
+        Epic epicId2New = new Epic("Epic1", "Descriptoin1", StatusTask.NEW);
+        Epic epicId3New = new Epic("Epic1", "Descriptoin1", StatusTask.NEW);
+        taskManager.addEpic(epicId2New);
+        taskManager.addEpic(epicId3New);
 
-        //Создание и сохранение эпика
-        Epic epic = new Epic( 2000,1,2,3,00,"Epic1","Descriptoin1",StatusTask.NEW,60);
-        Epic epic1 = new Epic( 2000,2,3,4,30,"Еpic2","Descriptoin2",StatusTask.NEW,60 );
+        Task updateTask = new Task("TaskUPDATE", " DescriptoinUPDATE", StatusTask.NEW, "01.02.2000 07:00", 60);
+        taskManager.updatingTask(0, updateTask);
 
-        taskManager.addEpic(epic);
-        taskManager.addEpic(epic1);
+        SubTask subTaskId4New = new SubTask("SubTask1", "Descriptoin1", StatusTask.NEW, "01.02.2000 12:00", 60, 3);
+        SubTask subTaskId5Done = new SubTask("Subtask2", "Descriptoin2", StatusTask.DONE, "01.02.2000 10:00", 60, 3);
+        SubTask subTaskId6Done = new SubTask("Subtask3", "Descriptoin2", StatusTask.DONE, "01.02.2000 11:00", 60, 3);
+        taskManager.addSubtasks(subTaskId4New);
+        taskManager.addSubtasks(subTaskId5Done);
+        taskManager.addSubtasks(subTaskId6Done);
+        taskManager.getTaskByID(0); // Запись в историю просмотра
+        taskManager.getIdSubTask(4);
+        taskManager.save();
 
-        //Создание и сохранение сабтаски
-        SubTask subTask = new SubTask(2001,12,1,7,30,"SubTask1","Descriptoin1",StatusTask.DONE,3,60);
-        SubTask subTask1 = new SubTask(2001,1,2,7,20,"Subtask2","Descriptoin2",StatusTask.DONE,3,80);
-        SubTask subTask2 = new SubTask(2001,1,3,7,50,"Subtask3","Descriptoin3",StatusTask.DONE,3,90);
-
-        taskManager.addSubtasks(subTask);
-        taskManager.addSubtasks(subTask1);
-        taskManager.addSubtasks(subTask2);
-
-        //----------------------------------------------
-        // Запись Истории вызовов в файл
-
-        taskManager.getTaskByID(0);
-        taskManager.getTaskByID(1);
-        taskManager.getTaskByID(2);
-        taskManager.getEpicByID(3);
-        taskManager.getEpicByID(4);
-
-       // taskManager.getTaskByID(1);
-        taskManager.getIdSubTask(5);
-        taskManager.getIdSubTask(6);
-        taskManager.getIdSubTask(7);
-     //  taskManager.deleteIdEpic(3);
-
-     //   taskManager.getTaskByID(2);
-
-      //  taskManager.getTaskByID(2);
         System.out.println(taskManager.getHistory());
+        taskManager.save();
+        taskManager.load();
 
-        System.out.println("----------Восстановление данных из файла ---------------------");
-          File file = new File("src/task.csv");
-          taskManager.loadFromFile(file);
-          System.out.println(taskManager.getHistory());
+
+        System.out.println("Проверка данных на сервере---------------");
+        for (String data: kvServer.getData().values()) {
+          System.out.println(data);
+        }
+
+        System.out.println();
+        System.out.println("Полученные данные из сервера-------------");
+        System.out.println(taskManager.getTasks());
+        System.out.println(taskManager.getEpic());
+        System.out.println(taskManager.getSubTaskList());
+        System.out.println(taskManager.getHistory());
     }
 }
-*/

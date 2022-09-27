@@ -1,10 +1,4 @@
 id,type,name,status,description,startTime,duration,epicId
 0,TASK,Task1,NEW, Descriptoin1,01.02.2000 08:00,60
 1,TASK,Task2,DONE, Descriptoin1,01.02.2000 07:00,60
-2,EPIC,Epic1,NEW,Descriptoin1,null,0
-3,EPIC,Epic1,NEW,Descriptoin1,null,0
-4,SUBTASK,SubTask1,NEW,Descriptoin1,01.02.2000 12:00,60,3
-5,SUBTASK,Subtask2,DONE,Descriptoin2,01.02.2000 10:00,60,3
-6,SUBTASK,Subtask2,DONE,Descriptoin2,01.02.2000 11:00,60,3
 
-0,1,2,3,4,5,6

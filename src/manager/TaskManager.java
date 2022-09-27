@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.List;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public interface TaskManager {
 
@@ -59,7 +58,11 @@ public interface TaskManager {
 
     List<Task> getHistory(); // История просмотренных задач
 
-    public Set<Task> getPrioritizedTasks(); // Вывод сортировки
+    public ArrayList<Task> getPrioritizedTasks(); // Вывод сортировки
 
     void loadFromFile(File file) throws IOException;
+
+    void save();
+
+    boolean load();
 }

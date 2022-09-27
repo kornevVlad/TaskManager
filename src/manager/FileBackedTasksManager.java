@@ -39,7 +39,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public List<Task> getHistory() { // Получение списка  истории Задач
-        save();
         return inMemoryHistoryManager.getHistory();
     }
 
@@ -264,7 +263,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
         return history;
     }
-
+/*
     public static void main(String[] args) throws IOException {
 
         TaskManager taskManager = Managers.getDefault();
@@ -281,7 +280,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
         SubTask subTaskId4New = new SubTask("SubTask1", "Descriptoin1", StatusTask.NEW, "01.02.2000 12:00", 60, 3);
         SubTask subTaskId5Done = new SubTask("Subtask2", "Descriptoin2", StatusTask.DONE, "01.02.2000 10:00", 60, 3);
-        SubTask subTaskId6Done = new SubTask("Subtask2", "Descriptoin2", StatusTask.DONE, "01.02.2000 11:00", 60, 3);
+        SubTask subTaskId6Done = new SubTask("Subtask3", "Descriptoin2", StatusTask.DONE, "01.02.2000 11:00", 60, 3);
         taskManager.addSubtasks(subTaskId4New);
         taskManager.addSubtasks(subTaskId5Done);
         taskManager.addSubtasks(subTaskId6Done);
@@ -319,5 +318,5 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
         System.out.println("Печатаем историю");
         System.out.println(taskManager.getHistory());
-    }
+    }*/
 }
