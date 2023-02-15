@@ -2,56 +2,58 @@
 Создание, обновление, удаление задач и подзадач. Возможность просмотра истории созданных задач
 
 ## Функциональность
-     **addTasks** // Сохраняем таски  
+    addTasks // Сохраняем таски  
 
-    **addEpic** // Сохраняем Епики  
+    addEpic // Сохраняем Епики  
 
-    **addSubtasks** // Сохраняем Сабтаски  
+    addSubtasks // Сохраняем Сабтаски  
 
-    **getTasks** // Получение списка всех задач  
+    getTasks // Получение списка всех задач  
 
-    **deleteTask** // Очистка списка Task  
+    deleteTask // Очистка списка Task  
 
-    Task getTaskByID(int taskId); // Получение задачи по айди // ИСПРАВЛЕНО+
+    getTaskByID // Получение задачи по айди
 
-    void updatingTask(int taskId, Task task);// Обновление Задачи по ID+
+    updatingTask // Обновление Задачи по ID
 
-    void deleteIdTask(int taskId); // Удаление Задачи по ID+
+    deleteIdTask // Удаление Задачи по ID
 
-    ArrayList<Epic> getEpic(); // Получение списка всех Эпиков // ИСПРАВЛЕНО+
+    getEpic // Получение списка всех Эпиков 
 
-    Epic getEpicByID(int epicId); // Получение Эпика по ID // ИСПРАВЛЕНО+
+    getEpicByID // Получение Эпика по ID 
 
-    void deleteEpicAndSubtask(); // Очистка списка Epic,SubTask+
+    deleteEpicAndSubtask // Очистка списка Epic,SubTask
 
-    void updateEpic(int epicId, Epic epic); //Обновление Эпика+
+    updateEpic //Обновление Эпика
 
-    void deleteIdEpic(int epicId); // Удаление Эпика по ID+
+    deleteIdEpic // Удаление Эпика по ID
 
-    ArrayList<SubTask> getSubTaskList(); // Получение списка всех Сабтасков+
+    getSubTaskList // Получение списка всех Сабтасков
 
-    void deleteSubTask(); // Очистка списка SubTask+
+    deleteSubTask // Очистка списка SubTask
 
-    void deleteIdSubtask(int subtaskId); // Удаление Сабтаска по ID+
+    deleteIdSubtask// Удаление Сабтаска по ID
 
-    SubTask getIdSubTask(int epicId); // Получение Сабтаска по ID+
+    getIdSubTask // Получение Сабтаска по ID
 
-    void updateSubTask(int epicId, SubTask subTask); //Обновление Сабтаска+
+    updateSubTask //Обновление Сабтаска
 
-    ArrayList<SubTask> getSubTaskListId(int epicId); // Получение списка всех подзадач определённого эпика.+
+    getSubTaskListId // Получение списка всех подзадач определённого эпика
 
-    void setStatusTask(int taskId, Task task); // Обновление статуса задачи // ИСПРАВЛЕНО+
+    setStatusTask // Обновление статуса задачи
 
-    void setStatusEpic(int epicId, Epic epic); // Обновление Статуса Эпика+
+    setStatusEpic // Обновление Статуса Эпика
 
-    void setStatusSubtask(int epicId, SubTask subtask); // Обновление статуса Сабтаски+
+    setStatusSubtask // Обновление статуса Сабтаски
 
-    List<Task> getHistory(); // История просмотренных задач
+    getHistory // История просмотренных задач
 
-    public ArrayList<Task> getPrioritizedTasks(); // Вывод сортировки
+    getPrioritizedTasks // Вывод сортировки  
+    
+## Стек
+Java 11,  Collections,REST API, Junit.
 
-    void loadFromFile(File file) throws IOException;
-
-    void save();
-
-    boolean load();
+## Развертывание 
+1. Установить JDK amazon coretto 11 [скачать для х64](https://corretto.aws/downloads/latest/amazon-corretto-11-x64-windows-jdk.msi), [скачать для х86](https://corretto.aws/downloads/latest/amazon-corretto-11-x86-windows-jdk.msi)
+2. Установить Intellij Idea [скачать](https://www.jetbrains.com/ru-ru/idea/download/download-thanks.html?platform=windows&code=IIC)
+3. Скачать проект и запустить
