@@ -1,5 +1,5 @@
 # Трекер Задач
-Создание, обновление, удаление задач и подзадач. Возможность просмотра истории созданных задач
+Создание, обновление, удаление задач и подзадач. Возможность просмотра истории созданных задач.
 
 ## Функциональность
     addTasks // Сохраняем таски  
@@ -51,7 +51,7 @@
     getPrioritizedTasks // Вывод сортировки  
     
 ## Стек
-Java 11,  Collections,REST API, Junit.
+Java 11, Collections, REST API, Junit.
 
 ## Развертывание 
 1. Установить JDK amazon coretto 11 [скачать для х64](https://corretto.aws/downloads/latest/amazon-corretto-11-x64-windows-jdk.msi), [скачать для х86](https://corretto.aws/downloads/latest/amazon-corretto-11-x86-windows-jdk.msi)
